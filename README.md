@@ -8,7 +8,7 @@
      FBTWalk changes the world origin, so when you change the avatar or change the world, it will teleport to another place. You can use reset location to solve this problem
  
 ### Releases
-   [Download here](https://github.com/Yuumum/OpenVR-FBTWalk/releases/tag/1.0.0.1)
+   [Download here](https://github.com/Yuumum/OpenVR-FBTWalk/releases)
 
 ### Test video
    https://twitter.com/Yuumu_CN/status/1367294506517757952
