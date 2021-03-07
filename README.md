@@ -2,7 +2,7 @@
 
 ### Features
    Monitor the movement of the tracker to achieve space walking, Recommended to be used with an unpowered treadmill  
-   #Recommended for VRChat only
+   â€»Recommended for VRChat only
    
    #VRChat  
      FBTWalk changes the world origin, so when you change the avatar or change the world, it will teleport to another place. You can use reset location to solve this problem
@@ -14,8 +14,8 @@
    https://twitter.com/Yuumu_CN/status/1367294506517757952
    
 ### How to use
-   #Please make sure that you have set the corresponding position (waist, left foot, right foot) in steamvr ¡ú settings ¡ú controller ¡ú management tracker  
-   #If you have already clicked the [Start] button, you will not be able to use space movement such as [OpenVR-AdvancedSettings]. You can click [Stop] before using them.
+   â€»Please make sure that you have set the corresponding position (waist, left foot, right foot) in steamvr â†’ settings â†’ controller â†’ management tracker  
+   â€»If you have already clicked the [Start] button, you will not be able to use space movement such as [OpenVR-AdvancedSettings]. You can click [Stop] before using them.
    
 
 ### How to compile
