@@ -126,8 +126,10 @@ void Move_2(OverlayWidget::posecha& Pcha, vr::HmdMatrix34_t nowpose, vr::HmdMatr
     //The moving distance is greater than limit
     if (Pcha.cha > _PLAYMOD.limit*2) {
 
-        if (Pcha.cha > 0.3) return;
-
+        if (Pcha.cha > 0.3) {
+            printf_s("\n Tracker_lose cha = %.5f",Pcha.cha);
+            return;
+        }
  
         //Calculate current distance
         Pcha.distance_ima =
@@ -176,6 +178,19 @@ void Move_2(OverlayWidget::posecha& Pcha, vr::HmdMatrix34_t nowpose, vr::HmdMatr
 
             if (Pcha.distance_ima - Pcha.distance_mae < 0) {
 
+                Pcha.HTdis = 0;
+                if (Pcha.Tracker == 1) {
+                    if (Pcha.cha < PchaR.cha && PchaR.walkb) return;
+                }
+                else
+                {
+                    if (Pcha.cha < PchaL.cha && PchaL.walkb) return;
+                }
+                
+
+ 
+
+
                 if (_PLAYMOD.smooth) {
                     Pcha.s_x = Pcha.s_x + nowpose.m[0][3] - lastpose.m[0][3];
                     Pcha.s_z = Pcha.s_z + nowpose.m[2][3] - lastpose.m[2][3];
@@ -199,22 +214,29 @@ void Move_2(OverlayWidget::posecha& Pcha, vr::HmdMatrix34_t nowpose, vr::HmdMatr
                 }
                 _WALKRECORD.Distance = _WALKRECORD.Distance + Pcha.cha;
 
+                Pcha.walkb = true;
                 newpose = orig;
                 vr::VRChaperoneSetup()->SetWorkingStandingZeroPoseToRawTrackingPose(&newpose);
                 vr::VRChaperoneSetup()->ShowWorkingSetPreview();
             }
             else
             {
-                if (!Pcha.NewSteap) {
-                    Pcha.NewSteap = true;
-                    Pcha.R_dis = 0;
+                Pcha.HTdis = Pcha.HTdis + Pcha.cha;
+                if (Pcha.HTdis > 0.2) {
+                     
+                    if (!Pcha.NewSteap) {
+                        Pcha.NewSteap = true;
+                        Pcha.R_dis = 0;
+                    }
+
+                    if (Pcha.s_i != 0) {
+                        Pcha.s_i = 0;
+                        Pcha.s_x = 0;
+                        Pcha.s_z = 0;
+                    }
                 }
 
-                if (Pcha.s_i != 0) {
-                    Pcha.s_i = 0;
-                    Pcha.s_x = 0;
-                    Pcha.s_z = 0;
-                }
+ 
 
             }
 
@@ -307,6 +329,14 @@ void Move_3(OverlayWidget::posecha& Pcha, vr::HmdMatrix34_t nowpose, vr::HmdMatr
             if (UGOKU3_zt == 1) {
                 Pcha.walk_zt = 1;
 
+                Pcha.HTdis = 0;
+                if (Pcha.Tracker == 1) {
+                    if (Pcha.cha < PchaR.cha && PchaR.walkb) return;
+                }
+                else
+                {
+                    if (Pcha.cha < PchaL.cha && PchaL.walkb) return;
+                }
 
                 Pcha.s_x = Pcha.s_x + nowpose.m[0][3] - lastpose.m[0][3];
                 Pcha.s_z = Pcha.s_z + nowpose.m[2][3] - lastpose.m[2][3];
@@ -329,24 +359,28 @@ void Move_3(OverlayWidget::posecha& Pcha, vr::HmdMatrix34_t nowpose, vr::HmdMatr
                     }
                 }
                 _WALKRECORD.Distance = _WALKRECORD.Distance + Pcha.cha;
-
+                Pcha.walkb = true;
                 newpose = orig;
                 vr::VRChaperoneSetup()->SetWorkingStandingZeroPoseToRawTrackingPose(&newpose);
                 vr::VRChaperoneSetup()->ShowWorkingSetPreview();
             }
             else
             {
-                if (!Pcha.NewSteap) {
-                    Pcha.NewSteap = true;
-                    Pcha.R_dis = 0;
-                }
-                     
+                Pcha.HTdis = Pcha.HTdis + Pcha.cha;
+                if (Pcha.HTdis > 0.2) {
+                    if (!Pcha.NewSteap) {
+                        Pcha.NewSteap = true;
+                        Pcha.R_dis = 0;
+                    }
 
-                if (Pcha.s_i != 0) {
-                    Pcha.s_i = 0;
-                    Pcha.s_x = 0;
-                    Pcha.s_z = 0;
+
+                    if (Pcha.s_i != 0) {
+                        Pcha.s_i = 0;
+                        Pcha.s_x = 0;
+                        Pcha.s_z = 0;
+                    }
                 }
+ 
             }
         }
         else
@@ -359,6 +393,15 @@ void Move_3(OverlayWidget::posecha& Pcha, vr::HmdMatrix34_t nowpose, vr::HmdMatr
             if (UGOKU3_zt == 2) {
                 Pcha.walk_zt = 2;
 
+                Pcha.HTdis = 0;
+                if (Pcha.Tracker == 1) {
+                    if (Pcha.cha < PchaR.cha && PchaR.walkb) return;
+                }
+                else
+                {
+                    if (Pcha.cha < PchaL.cha && PchaL.walkb) return;
+                }
+
                 Pcha.s_x = Pcha.s_x + nowpose.m[0][3] - lastpose.m[0][3];
                 Pcha.s_z = Pcha.s_z + nowpose.m[2][3] - lastpose.m[2][3];
                 Pcha.s_i = Pcha.s_i + 1;
@@ -380,22 +423,26 @@ void Move_3(OverlayWidget::posecha& Pcha, vr::HmdMatrix34_t nowpose, vr::HmdMatr
                     }
                 }
                 _WALKRECORD.Distance = _WALKRECORD.Distance + Pcha.cha;
-
+                Pcha.walkb = true;
                 newpose = orig;
                 vr::VRChaperoneSetup()->SetWorkingStandingZeroPoseToRawTrackingPose(&newpose);
                 vr::VRChaperoneSetup()->ShowWorkingSetPreview();
             }
             else
             {
-                if (!Pcha.NewSteap) { 
-                    Pcha.NewSteap = true; 
-                    Pcha.R_dis = 0;
-                }
+                Pcha.HTdis = Pcha.HTdis + Pcha.cha;
+                if (Pcha.HTdis > 0.2) {
+                    if (!Pcha.NewSteap) {
+                        Pcha.NewSteap = true;
+                        Pcha.R_dis = 0;
+                    }
 
-                if (Pcha.s_i != 0) {
-                    Pcha.s_i = 0;
-                    Pcha.s_x = 0;
-                    Pcha.s_z = 0;
+
+                    if (Pcha.s_i != 0) {
+                        Pcha.s_i = 0;
+                        Pcha.s_x = 0;
+                        Pcha.s_z = 0;
+                    }
                 }
             }
 
@@ -479,6 +526,15 @@ void Move_4(OverlayWidget::posecha& Pcha, vr::HmdMatrix34_t nowpose, vr::HmdMatr
 
         if (Pcha.distance_ima - Pcha.distance_mae < 0) {
 
+            Pcha.HTdis = 0;
+            if (Pcha.Tracker == 1) {
+                if (Pcha.cha < PchaR.cha && PchaR.walkb) return;
+            }
+            else
+            {
+                if (Pcha.cha < PchaL.cha && PchaL.walkb) return;
+            }
+
             if (_PLAYMOD.smooth) {
                 Pcha.s_x = Pcha.s_x + nowpose.m[0][3] - lastpose.m[0][3];
                 Pcha.s_z = Pcha.s_z + nowpose.m[2][3] - lastpose.m[2][3];
@@ -501,21 +557,26 @@ void Move_4(OverlayWidget::posecha& Pcha, vr::HmdMatrix34_t nowpose, vr::HmdMatr
                 }
             }
             _WALKRECORD.Distance = _WALKRECORD.Distance + Pcha.cha;
-
+            Pcha.walkb = true;
             newpose = orig;
             vr::VRChaperoneSetup()->SetWorkingStandingZeroPoseToRawTrackingPose(&newpose);
             vr::VRChaperoneSetup()->ShowWorkingSetPreview();
         }
         else
         {
-            if (!Pcha.NewSteap) {
-                Pcha.NewSteap = true;
-                Pcha.R_dis = 0;
-            }
-            if (Pcha.s_i != 0) {
-                Pcha.s_i = 0;
-                Pcha.s_x = 0;
-                Pcha.s_z = 0;
+            Pcha.HTdis = Pcha.HTdis + Pcha.cha;
+            if (Pcha.HTdis > 0.2) {
+
+                if (!Pcha.NewSteap) {
+                    Pcha.NewSteap = true;
+                    Pcha.R_dis = 0;
+                }
+
+                if (Pcha.s_i != 0) {
+                    Pcha.s_i = 0;
+                    Pcha.s_x = 0;
+                    Pcha.s_z = 0;
+                }
             }
 
         }
@@ -550,6 +611,9 @@ void pose_loop() {
 
     PchaL.walk_zt = 0;
     PchaR.walk_zt = 0;
+
+    PchaL.Tracker = 1;
+    PchaR.Tracker = 2;
 
     vr::HmdMatrix34_t waistpose;
     float waist_X = 0;
@@ -626,7 +690,7 @@ void pose_loop() {
                     else if (tracker.footL == ids)
                     {
 
-
+                        PchaL.walkb = false;
 
                         PchaL.cha =
                             sqrt((tracker.lastposeL.m[0][3] -
@@ -646,6 +710,7 @@ void pose_loop() {
                     }
                     else if (tracker.footR == ids)
                     {
+                        PchaR.walkb = false;
 
                         PchaR.cha =
                             sqrt((tracker.lastposeR.m[0][3] -

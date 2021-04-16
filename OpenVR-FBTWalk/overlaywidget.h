@@ -77,6 +77,9 @@ public:
         vr::HmdMatrix34_t strat_P;
         vr::HmdMatrix34_t pointC;
         readys ready;
+        float HTdis = 0;
+        bool walkb = false;
+        int Tracker = 0;
     };
  
     class Trackers {
