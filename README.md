@@ -11,7 +11,7 @@
    [Download here](https://github.com/Yuumum/OpenVR-FBTWalk/releases)
 
 ### Test video
-   https://twitter.com/Yuumu_CN/status/1367294506517757952
+   https://www.bilibili.com/video/BV1Nz4y117gf/
    
 ### How to use
    ※Please make sure that you have set the corresponding position (waist, left foot, right foot) in steamvr → settings → controller → management tracker  
